@@ -22,7 +22,6 @@ def show():
             st.session_state.user = username
             st.session_state.page = "user"
             st.session_state.page_radio = "user"   # <-- force le radio
-
     else:
         st.session_state.user = None
         st.error("❌ Nom d'utilisateur vide.")
@@ -31,7 +30,6 @@ def show():
     if st.button("Créer un compte", key="register_button"):
         st.session_state.page = "register"
         st.session_state.page_radio = "register"  # <-- force le radio
-
 
 
 
