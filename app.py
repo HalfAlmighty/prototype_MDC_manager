@@ -20,8 +20,8 @@ if "page" not in st.session_state:
     st.session_state.page = "login"
 if "user" not in st.session_state:
     st.session_state.user = None
-if "page_radio" not in st.session_state:
-    st.session_state.page_radio = st.session_state.page
+if "choice_radio" not in st.session_state:
+    st.session_state.choice_radio = st.session_state.page
 
 # --- Barre latérale (fixe) ---
 with st.sidebar:
@@ -56,6 +56,7 @@ elif page == "user":
     user.show()
 else:
     st.error("Page inconnue.")
+
 
 
 
