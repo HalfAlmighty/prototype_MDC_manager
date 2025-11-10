@@ -6,7 +6,7 @@ def display_clock(color="white", size="22px", show_seconds=True, format_24h=True
     Numéro de semaine Jour jj/mm/aaa
     """
     clock_html = f"""
-    <div style="font-size:{size}; font-weight:bold; color:{color}; margin-bottom:10px;">
+    <div style="font-size:{size}; font-weight:bold; color:{color}; margin-bottom:5px;">
         🕒 <span id="clock">00:00:00</span>
     </div>
     <div style="font-size:14px; font-weight:normal; color:{clock_color}; margin-bottom:10px;">
@@ -52,6 +52,7 @@ def display_clock(color="white", size="22px", show_seconds=True, format_24h=True
     </script>
     """
     components.html(clock_html, height=50)
+
 
 
 
