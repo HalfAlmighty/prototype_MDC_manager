@@ -1,18 +1,33 @@
 # pages/user.py
 import streamlit as st
+from webscraping import carloerba, vwr
 
 def show():
     st.title("👤 Espace Utilisateur")
     st.write(f"Bienvenue {st.session_state.user} 👋")
+    st.markdown("---")
+    st.title("🧪 Espace Admin - Webscraping")
+    st.subheader(f"Connecté en tant que {st.session_state.get('user')}")
 
-    from webscraping import carloerba
+    # Barre latérale (fixe) Choix du module de webscraping
+    with st.sidebar:
+        module_choice = st.radio(
+        "Navigation",
+        ["CarloErba", "VWR"],
+        key="user_module_radio"
+        )   
 
     st.markdown("---")
-    st.title("🧪 Espace de scraping Carlo Erba")
-    carloerba.show()
 
+    # Affichage du module choisi
+    if module_choice == "Carlo Erba":
+        carloerba.show()
+    elif module_choice == "VWR":
+        vwr.show()
+    
     if st.button("Se déconnecter"):
         st.session_state.user = None
         st.session_state.page = "login"
         st.rerun()
+
 
