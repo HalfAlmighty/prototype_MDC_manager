@@ -22,7 +22,7 @@ def show():
     familles_list = df[df['fournisseur'] == fournisseur_selected]['famille'].unique()
     for famille in familles_list:
         lots = df[(df['fournisseur'] == fournisseur_selected) & (df['famille'] == famille)]['lot'].tolist()
-        with st.expander(fournisseur):
+        with st.expander(famille):
             if famille == "BOUTEILLE DE GAZ QUALITE INDUSTRIEL":
                 linde_france.show(fournisseur_selected, lots)
             elif famille == "CONSOMMABLE POUR LA BIOLOGIE" and lots == "Lot A":
@@ -31,4 +31,5 @@ def show():
                 ugap.show(fournisseur_selected, lots)
             elif famille == "CONSOMMABLE POUR L'HYGIENE ET LA SECURITE - EPI" and lots == "Lot C":
                 para_medical_hygiene.show(fournisseur_selected, lots)
+
 
