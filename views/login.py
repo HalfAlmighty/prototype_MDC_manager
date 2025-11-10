@@ -16,6 +16,6 @@ def show():
             st.error("❌ Identifiants incorrects.")
 
     if st.button("Créer un compte"):
-        st.session_state.page = "register"
-        st.rerun()
+        register.show()
+
 
