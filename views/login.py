@@ -1,18 +1,18 @@
 # views/login.py
 import streamlit as st
-from views import admin, user
 
 ADMINS = ["j.riff", "g.saucy", "n.metz", "c.riemer", "m.ludwig"]
 
 def show():
     st.title("🔐 Connexion")
+    
     #Créer un formulaire
     with st.form("login_form"):
-    username = st.text_input("Nom d'utilisateur", key="login_user")
-    password = st.text_input("Mot de passe", type="password", key="login_pwd")
+        username = st.text_input("Nom d'utilisateur", key="login_user")
+        password = st.text_input("Mot de passe", type="password", key="login_pwd")
 
-    # Bouton de soumission
-    submitted = st.form_submit_button("Se connecter")
+        # Bouton de soumission
+        submitted = st.form_submit_button("Se connecter")
     
     if submitted:
         if username:
@@ -30,6 +30,7 @@ def show():
     if st.button("Créer un compte", key="login_register_btn"):
         st.session_state.page = "register"
         st.rerun()
+
 
 
 
