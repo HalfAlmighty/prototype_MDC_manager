@@ -13,11 +13,24 @@ def add_user(username, password, name="", is_admin=0, is_validated=0):
 
 # --- Vérifier un utilisateur et son mot de passe ---
 def verify_user(username, password):
-    if username:
-        user_id = "Toto"; is_admin = True; is_validated = True;
-        return {"id": user_id, "is_admin": bool(is_admin), "is_validated": bool(is_validated)}
-    return None
+    """
+    Login test :
+    - Pour certains noms, renvoie admin
+    - Pour tous les autres, renvoie user
+    """
+    if not username:
+        return None
 
+    # Liste des admins
+    admins = ["j.riff", "g.saucy", "n.metz", "c.riemer", "m.ludwig"]
+
+    is_admin = username.lower() in admins
+
+    return {
+        "id": username,
+        "is_admin": is_admin,
+        "is_validated": True  # Toujours validé
+    }
 
 # --- Obtenir la liste de tous les utilisateurs ---
 def get_all_users():
@@ -26,4 +39,5 @@ def get_all_users():
 
 # --- Mettre à jour les droits ou la validation ---
 def update_user_status(user_id, is_admin=None, is_validated=None):
+
     1==1
