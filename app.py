@@ -15,24 +15,23 @@ st.sidebar.write("Utilisateur :", st.session_state.get("user"))
 # --- Import des views ---
 from views import login, register, admin, user
 
+# --- Initialisation de session_state ---
+if "page" not in st.session_state:
+    st.session_state.page = "login"
+if "user" not in st.session_state:
+    st.session_state.user = None
+if "page_radio" not in st.session_state:
+    st.session_state.page_radio = st.session_state.page
+
 # --- Barre latérale (fixe) ---
 with st.sidebar:
     display_clock(color="white", size="20px", show_seconds=True)
     # Ajout d'un petit menu
     st.markdown("---")
     choice = st.radio("Navigation", ["Login", "Register", "Admin", "User"])
+    # Mettre à jour la page si l'utilisateur change le radio
     st.session_state.page = choice.lower()
-    
-
-# --- Gestion de la session ---
-if "page" not in st.session_state:
-    st.session_state.page = "login"
-if "user" not in st.session_state:
-    st.session_state.user = None
-
-# On ne met à jour st.session_state.page que si l'utilisateur change manuellement le menu
-if choice.lower() != st.session_state.page:
-    st.session_state.page = choice.lower()
+    st.session_state.page_radio = choice.lower()   
 
 # --- Routage ---
 page = st.session_state.page
@@ -47,6 +46,7 @@ elif page == "user":
     user.show()
 else:
     st.error("Page inconnue.")
+
 
 
 
