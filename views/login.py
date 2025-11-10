@@ -14,12 +14,16 @@ def show():
             st.session_state.user = username
             if username in ADMINS:
                 st.session_state.page = "admin"
+                st.rerun()
             else:
                 st.session_state.page = "user"
             st.success(f"Connexion réussie ! Bienvenue {username}")
+            st.rerun()
         else:
             st.error("❌ Nom d'utilisateur vide.")
 
     if st.button("Créer un compte", key="login_register_btn"):
         st.session_state.page = "register"
+        st.rerun()
+
 
