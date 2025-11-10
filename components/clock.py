@@ -1,13 +1,22 @@
 import streamlit.components.v1 as components
 
 def display_clock(color="white", size="22px", show_seconds=True, format_24h=True):
+    """
+    Affiche une horloge dynamique avec la date en dessous au format :
+    Numéro de semaine Jour jj/mm/aaa
+    """
     clock_html = f"""
     <div style="font-size:{size}; font-weight:bold; color:{color}; margin-bottom:10px;">
         🕒 <span id="clock">00:00:00</span>
     </div>
+    <div style="font-size:14px; font-weight:normal; color:{clock_color}; margin-bottom:10px;">
+        📅 <span id="date">S-- --/--/----</span>
+    </div>
     <script>
         function updateClock() {{
             var now = new Date();
+
+            // Heure
             var h = now.getHours();
             var m = now.getMinutes();
             var s = now.getSeconds();
@@ -43,5 +52,6 @@ def display_clock(color="white", size="22px", show_seconds=True, format_24h=True
     </script>
     """
     components.html(clock_html, height=50)
+
 
 
