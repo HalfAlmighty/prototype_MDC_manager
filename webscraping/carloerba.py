@@ -40,6 +40,36 @@ def show():
     if st.button("🚀 Lancer le scraping"):
         carloerba_scraper(email, password, excel_file, manual_references, search_option)
 
+    # -------------------------------
+    # 🧠 7️⃣ Affichage du dernier résultat s’il existe
+    # -------------------------------
+    if "df_carloerba" in st.session_state and st.session_state.df_carloerba is not None:
+        df = st.session_state.df_carloerba
+
+        def color_availability(val):
+            if val == "En stock":
+                return "background-color: #90EE90; color: black;"
+            elif "Sous" in val:
+                return "background-color: #FFD700; color: black;"
+            else:
+                return "background-color: #F08080; color: black;"
+
+        st.dataframe(df.style.applymap(color_availability, subset=["Disponibilité"]))
+
+        # ✅ Génération du fichier Excel en mémoire
+        output = BytesIO()
+        df.to_excel(output, index=False, engine="openpyxl")
+        output.seek(0)
+
+        # ✅ Bouton de téléchargement stable
+        st.download_button(
+            label="📥 Télécharger les résultats Excel",
+            data=output,
+            file_name="resultats_scraping_carloerba.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            key="download_excel"
+        )
+
 
 def carloerba_scraper(email, password, excel_file, manual_references, search_option):
     if not email or not password:
@@ -147,40 +177,5 @@ def carloerba_scraper(email, password, excel_file, manual_references, search_opt
     df = pd.DataFrame(results)
     st.success("✅ Scraping terminé !")
 
-    # Mise en couleur des disponibilités
-    def color_availability(val):
-        if val == "En stock":
-            return "background-color: #90EE90; color: black;"
-        elif "Sous" in val:
-            return "background-color: #FFD700; color: black;"
-        else:
-            return "background-color: #F08080; color: black;"
-
-    st.dataframe(df.style.applymap(color_availability, subset=["Disponibilité"]))
-
-    # -------------------------------
-    # 6️⃣ Téléchargement Excel en mémoire
-    # -------------------------------
-    #buffer = BytesIO()
-    #df.to_excel(buffer, index=False)
-    #buffer.seek(0)
-
-    #st.download_button(
-    #    label="📥 Télécharger les résultats Excel",
-    #    data=buffer,
-    #    file_name="resultats_scraping_carloerba.xlsx",
-    #    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    #)
-    # ✅ Sauvegarde du fichier en mémoire (pas sur le disque)
-    output = BytesIO()
-    df.to_excel(output, index=False, engine="openpyxl")
-    output.seek(0)  # Revenir au début du buffer
-
-    # ✅ Bouton de téléchargement stable (pas d'effacement après clic)
-    st.download_button(
-        label="📥 Télécharger les résultats Excel",
-        data=output,
-        file_name="resultats_scraping.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-
+    # ✅ Sauvegarde dans la session (permet d’éviter la disparition après téléchargement)
+    st.session_state.df_carloerba = df
