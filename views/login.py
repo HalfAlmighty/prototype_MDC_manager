@@ -6,10 +6,15 @@ ADMINS = ["j.riff", "g.saucy", "n.metz", "c.riemer", "m.ludwig"]
 
 def show():
     st.title("🔐 Connexion")
+    #Créer un formulaire
+    with st.form("login_form"):
     username = st.text_input("Nom d'utilisateur", key="login_user")
     password = st.text_input("Mot de passe", type="password", key="login_pwd")
 
-    if st.button("Se connecter", key="login_btn"):
+    # Bouton de soumission
+    submitted = st.form_submit_button("Se connecter")
+    
+    if submitted:
         if username:
             st.session_state.user = username
             if username in ADMINS:
@@ -25,5 +30,6 @@ def show():
     if st.button("Créer un compte", key="login_register_btn"):
         st.session_state.page = "register"
         st.rerun()
+
 
 
