@@ -161,13 +161,26 @@ def carloerba_scraper(email, password, excel_file, manual_references, search_opt
     # -------------------------------
     # 6️⃣ Téléchargement Excel en mémoire
     # -------------------------------
-    buffer = BytesIO()
-    df.to_excel(buffer, index=False)
-    buffer.seek(0)
+    #buffer = BytesIO()
+    #df.to_excel(buffer, index=False)
+    #buffer.seek(0)
 
+    #st.download_button(
+    #    label="📥 Télécharger les résultats Excel",
+    #    data=buffer,
+    #    file_name="resultats_scraping_carloerba.xlsx",
+    #    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    #)
+    # ✅ Sauvegarde du fichier en mémoire (pas sur le disque)
+    output = BytesIO()
+    df.to_excel(output, index=False, engine="openpyxl")
+    output.seek(0)  # Revenir au début du buffer
+
+    # ✅ Bouton de téléchargement stable (pas d'effacement après clic)
     st.download_button(
         label="📥 Télécharger les résultats Excel",
-        data=buffer,
-        file_name="resultats_scraping_carloerba.xlsx",
+        data=output,
+        file_name="resultats_scraping.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
