@@ -1,5 +1,6 @@
 # views/login.py
 import streamlit as st
+from views import register, admin, user
 
 # Liste des utilisateurs admin pour le test
 ADMINS = ["j.riff", "g.saucy", "n.metz", "c.riemer", "m.ludwig"]
@@ -20,9 +21,11 @@ def show():
             if username in ADMINS:
                 st.session_state.page = "admin"
                 st.session_state.page_radio = "admin"
+                admin.show()
             else:
                 st.session_state.page = "user"
                 st.session_state.page_radio = "user"
+                user.show()
 
             st.success(f"Connexion réussie ! Bienvenue {username}")
             st.info("⚠️ Utilisez le menu de navigation pour accéder à votre page.")
@@ -34,3 +37,5 @@ def show():
         st.session_state.page = "register"
         st.session_state.page_radio = "register"
         st.info("⚠️ Utilisez le menu de navigation pour accéder à la page d'inscription.")
+        register.show()
+
