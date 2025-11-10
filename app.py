@@ -7,6 +7,11 @@ from components.clock import display_clock
 st.set_page_config(page_title="MDC Manager", layout="centered")
 init_db()
 
+st.sidebar.markdown("---")
+st.sidebar.subheader("DEBUG")
+st.sidebar.write("Page actuelle :", st.session_state.get("page"))
+st.sidebar.write("Utilisateur :", st.session_state.get("user"))
+
 # --- Import des views ---
 from views import login, register, admin, user
 
@@ -42,5 +47,6 @@ elif page == "user":
     user.show()
 else:
     st.error("Page inconnue.")
+
 
 
