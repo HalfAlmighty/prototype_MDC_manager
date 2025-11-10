@@ -1,6 +1,7 @@
 # pages/admin.py
 import streamlit as st
 from webscraping import carloerba, vwr
+from views import fournisseurs
 
 def show():
     st.title("👑 Espace Administrateur")
@@ -19,6 +20,8 @@ def show():
 
     st.markdown("---")
 
+    fournisseurs.show()
+    
     # Affichage du module choisi
     if module_choice == "CarloErba":
         carloerba.show()
@@ -30,4 +33,5 @@ def show():
         st.session_state.user = None
         st.session_state.page = "login"
         st.rerun()
+
 
