@@ -12,11 +12,13 @@ def show():
         user = verify_user(username, password)
 
         if user:
+            # redirection admin ou user selon le nom
             st.session_state.user = username
-            if user["is_admin"]:
-                st.session_state.page = "admin"
-            else:
-                st.session_state.page = "user"
+            st.session_state.page = "admin" if user["is_admin"] else "user"
             st.rerun()
         else:
             st.error("❌ Nom d'utilisateur vide.")
+
+    if st.button("Créer un compte"):
+        st.session_state.page = "register"
+        st.rerun()
