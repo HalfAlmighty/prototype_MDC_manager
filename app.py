@@ -2,6 +2,8 @@
 import streamlit as st
 from auth_db import init_db
 from components.clock import display_clock
+# --- Import des views ---
+from views import login, register, admin, user
 
 # --- Initialisation ---
 st.set_page_config(page_title="MDC Manager", layout="centered")
@@ -11,9 +13,6 @@ st.sidebar.markdown("---")
 st.sidebar.subheader("DEBUG")
 st.sidebar.write("Page actuelle :", st.session_state.get("page"))
 st.sidebar.write("Utilisateur :", st.session_state.get("user"))
-
-# --- Import des views ---
-from views import login, register, admin, user
 
 # --- Initialisation de session_state ---
 if "page" not in st.session_state:
@@ -40,6 +39,7 @@ elif page == "user":
     user.show()
 else:
     st.error("Page inconnue.")
+
 
 
 
