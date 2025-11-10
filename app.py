@@ -23,7 +23,7 @@ if "user" not in st.session_state:
 
 # --- Barre latérale (fixe) ---
 with st.sidebar:
-    display_clock(color="white", size="20px", show_seconds=True)
+    display_clock(color="white", size="40px", show_seconds=True)
     # Ajout d'un petit menu
     st.markdown("---")
 
@@ -40,6 +40,7 @@ elif page == "user":
     user.show()
 else:
     st.error("Page inconnue.")
+
 
 
 
