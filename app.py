@@ -7,12 +7,17 @@ from components.clock import display_clock
 st.set_page_config(page_title="MDC Manager", layout="centered")
 init_db()
 
-# --- Import des pages ---
-from pages import login, register, admin, user
+# --- Import des views ---
+from views_custom import login, register, admin, user
 
 # --- Barre latérale (fixe) ---
 with st.sidebar:
     display_clock(color="white", size="20px", show_seconds=True)
+    # Ajout d'un petit menu
+    st.markdown("---")
+    choice = st.radio("Navigation", ["Login", "Register", "Admin", "User"])
+    st.session_state.page = choice.lower()
+    
 
 # --- Gestion de la session ---
 if "page" not in st.session_state:
