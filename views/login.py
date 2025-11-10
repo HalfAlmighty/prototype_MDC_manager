@@ -22,7 +22,6 @@ def show():
                 st.session_state.page = "admin"
                 st.session_state.page_radio = "admin"
                 admin.show()
-                st.rerun()
             else:
                 st.session_state.page = "user"
                 st.session_state.page_radio = "user"
@@ -39,5 +38,6 @@ def show():
         st.session_state.page_radio = "register"
         st.info("⚠️ Utilisez le menu de navigation pour accéder à la page d'inscription.")
         register.show()
+
 
 
