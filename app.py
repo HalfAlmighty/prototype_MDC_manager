@@ -25,6 +25,10 @@ if "page" not in st.session_state:
 if "user" not in st.session_state:
     st.session_state.user = None
 
+# On ne met à jour st.session_state.page que si l'utilisateur change manuellement le menu
+if choice.lower() != st.session_state.page:
+    st.session_state.page = choice.lower()
+
 # --- Routage ---
 page = st.session_state.page
 
@@ -38,4 +42,5 @@ elif page == "user":
     user.show()
 else:
     st.error("Page inconnue.")
+
 
