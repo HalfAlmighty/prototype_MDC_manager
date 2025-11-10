@@ -3,23 +3,20 @@ import streamlit as st
 from auth_db import verify_user
 
 def show():
-    st.title("🔐 Connexion")
+    st.title("🔐 Connexion Test")
 
     username = st.text_input("Nom d'utilisateur")
     password = st.text_input("Mot de passe", type="password")
 
     if st.button("Se connecter"):
         user = verify_user(username, password)
-        if user:
-            if not user["is_validated"]:
-                st.warning("🕓 Votre compte est en attente de validation.")
-            else:
-                st.session_state.user = username
-                st.session_state.page = "admin" if user["is_admin"] else "user"
-                st.rerun()
-        else:
-            st.error("❌ Identifiants incorrects.")
 
-    if st.button("Créer un compte"):
-        st.session_state.page = "register"
-        st.rerun()
+        if user:
+            st.session_state.user = username
+            if user["is_admin"]:
+                st.session_state.page = "admin"
+            else:
+                st.session_state.page = "user"
+            st.rerun()
+        else:
+            st.error("❌ Nom d'utilisateur vide.")
