@@ -13,24 +13,9 @@ def add_user(username, password, name="", is_admin=0, is_validated=0):
 
 # --- Vérifier un utilisateur et son mot de passe ---
 def verify_user(username, password):
-    """
-    Login test pour Streamlit Community :
-    - Admins listés : j.riff, g.saucy, n.metz, c.riemer, m.ludwig
-    - Tous les autres -> user
-    - Mot de passe ignoré
-    """
     if username:
-        #admins = ["j.riff", "g.saucy", "n.metz", "c.riemer", "m.ludwig"]
-        #is_admin = username.lower() in admins
-        #user_id = username  # on renvoie le nom saisi
-        #is_validated = True  # toujours validé pour le test
         user_id = "Toto"; is_admin = True; is_validated = True;
-        return {
-            "id": user_id,
-            "is_admin": bool(is_admin),
-            "is_validated": bool(is_validated)
-        }
-
+        return {"id": user_id, "is_admin": bool(is_admin), "is_validated": bool(is_validated)}
     return None
     
 # --- Obtenir la liste de tous les utilisateurs ---
@@ -42,6 +27,7 @@ def get_all_users():
 def update_user_status(user_id, is_admin=None, is_validated=None):
 
     1==1
+
 
 
 
