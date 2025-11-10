@@ -20,28 +20,12 @@ if "page" not in st.session_state:
     st.session_state.page = "login"
 if "user" not in st.session_state:
     st.session_state.user = None
-if "choice_radio" not in st.session_state:
-    st.session_state.choice_radio = st.session_state.page
 
 # --- Barre latérale (fixe) ---
 with st.sidebar:
     display_clock(color="white", size="20px", show_seconds=True)
     # Ajout d'un petit menu
     st.markdown("---")
-    # Radio avec valeur initiale = session_state.choice_radio
-    choice = st.radio(
-        "Navigation",
-        ["Login", "Register", "Admin", "User"],
-        index=["login", "register", "admin", "user"].index(st.session_state.choice_radio)
-    )
-    
-    # Si l'utilisateur change le radio
-    if choice.lower() != st.session_state.choice_radio:
-        st.session_state.choice_radio = choice.lower()
-        st.session_state.page = choice.lower()
-
-st.sidebar.write("Navigation :", choice)
-
 
 # --- Routage ---
 page = st.session_state.page
@@ -56,6 +40,7 @@ elif page == "user":
     user.show()
 else:
     st.error("Page inconnue.")
+
 
 
 
