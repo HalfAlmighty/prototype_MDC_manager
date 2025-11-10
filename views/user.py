@@ -20,7 +20,7 @@ def show():
     st.markdown("---")
 
     # Affichage du module choisi
-    if module_choice == "Carlo Erba":
+    if module_choice == "CarloErba":
         carloerba.show()
     elif module_choice == "VWR":
         vwr.show()
@@ -29,5 +29,6 @@ def show():
         st.session_state.user = None
         st.session_state.page = "login"
         st.rerun()
+
 
 
