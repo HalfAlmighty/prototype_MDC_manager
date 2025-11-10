@@ -21,15 +21,18 @@ def show():
 
             # Mise à jour de la session
             st.session_state.user = username
-            st.session_state.page = "admin" if is_admin else "user"
+            st.session_state.page = "admin" if is_admin
+            st.session_state.page_radio = "admin"  # <-- force le radio
+            else "user"
             
             # On laisse le routage de app.py gérer l'affichage
-            st.rerun()
+            st.session_state.page_radio = "user"  # <-- force le radio
         else:
             st.error("❌ Nom d'utilisateur vide.")
 
     # --- Bouton création de compte ---
     if st.button("Créer un compte", key="register_button"):
         st.session_state.page = "register"
-        st.rerun()
+        st.session_state.page_radio = "register"  # <-- force le radio
+
 
