@@ -20,11 +20,11 @@ def verify_user(username, password):
     - Mot de passe ignoré
     """
     if username:
-        admins = ["j.riff", "g.saucy", "n.metz", "c.riemer", "m.ludwig"]
-        is_admin = username.lower() in admins
-        user_id = username  # on renvoie le nom saisi
-        is_validated = True  # toujours validé pour le test
-
+        #admins = ["j.riff", "g.saucy", "n.metz", "c.riemer", "m.ludwig"]
+        #is_admin = username.lower() in admins
+        #user_id = username  # on renvoie le nom saisi
+        #is_validated = True  # toujours validé pour le test
+        user_id = "Toto"; is_admin = True; is_validated = True;
         return {
             "id": user_id,
             "is_admin": bool(is_admin),
@@ -42,5 +42,6 @@ def get_all_users():
 def update_user_status(user_id, is_admin=None, is_validated=None):
 
     1==1
+
 
 
