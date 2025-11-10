@@ -1,6 +1,10 @@
-# webscraping/vwr.py
+# webscraping/para_medical_hygiene.py
 import streamlit as st
 
-def show():
-    st.header("🔍 Webscraping VWR")
-    st.write("Page de test pour VWR (vide pour l'instant).")
+def show(famille, lots):
+    st.write(f"### Module de test pour PARA MEDICAL HYGIENE")
+    st.write(f"Famille sélectionnée : {famille}")
+    
+    st.write("Liste des lots disponibles :")
+    for lot in lots:
+        st.write(f"- {lot}")
