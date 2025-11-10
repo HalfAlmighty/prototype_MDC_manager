@@ -5,7 +5,14 @@ def show():
     st.title("👤 Espace Utilisateur")
     st.write(f"Bienvenue {st.session_state.user} 👋")
 
+    from webscraping import carloerba
+
+    st.markdown("---")
+    st.title("🧪 Espace de scraping Carlo Erba")
+    carloerba.show()
+
     if st.button("Se déconnecter"):
         st.session_state.user = None
         st.session_state.page = "login"
         st.rerun()
+
