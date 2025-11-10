@@ -19,18 +19,19 @@ def verify_user(username, password):
     - Tous les autres -> user
     - Mot de passe ignoré
     """
-    if not username:
-        return None
+    if username:
+        admins = ["j.riff", "g.saucy", "n.metz", "c.riemer", "m.ludwig"]
+        is_admin = username.lower() in admins
+        user_id = username  # on renvoie le nom saisi
+        is_validated = True  # toujours validé pour le test
 
-    admins = ["j.riff", "g.saucy", "n.metz", "c.riemer", "m.ludwig"]
+        return {
+            "id": user_id,
+            "is_admin": bool(is_admin),
+            "is_validated": bool(is_validated)
+        }
 
-    is_admin = username.lower() in admins
-
-    return {
-        "id": username,
-        "is_admin": is_admin,
-        "is_validated": True  # Toujours validé pour le test
-    }
+    return None
     
 # --- Obtenir la liste de tous les utilisateurs ---
 def get_all_users():
@@ -41,4 +42,5 @@ def get_all_users():
 def update_user_status(user_id, is_admin=None, is_validated=None):
 
     1==1
+
 
