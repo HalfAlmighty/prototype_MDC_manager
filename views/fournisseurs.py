@@ -25,9 +25,10 @@ def show():
         with st.expander(fournisseur):
             if famille == "BOUTEILLE DE GAZ QUALITE INDUSTRIEL":
                 linde_france.show(fournisseur_selected, lots)
-            elif famille == "CONSOMMABLE POUR LA BIOLOGIE" && lots == "Lot A":
+            elif famille == "CONSOMMABLE POUR LA BIOLOGIE" and lots == "Lot A":
                 roth_sochiel.show(fournisseur_selected, lots)
-            elif famille == "CONSOMMABLE POUR LA BIOLOGIE" && lots == "Lot B":
+            elif famille == "CONSOMMABLE POUR LA BIOLOGIE" and lots == "Lot B":
                 ugap.show(fournisseur_selected, lots)
-            elif famille == "CONSOMMABLE POUR L'HYGIENE ET LA SECURITE - EPI" && lots == "Lot C":
+            elif famille == "CONSOMMABLE POUR L'HYGIENE ET LA SECURITE - EPI" and lots == "Lot C":
                 para_medical_hygiene.show(fournisseur_selected, lots)
+
