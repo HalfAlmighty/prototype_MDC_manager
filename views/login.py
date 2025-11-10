@@ -20,7 +20,7 @@ def show():
             if username in ADMINS:
                 st.session_state.page = "admin"
                 st.rerun()
-            else if username == "test" or "Test" or "TEST":
+            elif username == "test" or "Test" or "TEST":
                 st.session_state.page = "test"
                 st.rerun()
         else:
@@ -33,6 +33,7 @@ def show():
     if st.button("Créer un compte", key="login_register_btn"):
         st.session_state.page = "register"
         st.rerun()
+
 
 
 
