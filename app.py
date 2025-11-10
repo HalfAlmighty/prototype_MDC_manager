@@ -28,10 +28,14 @@ with st.sidebar:
     display_clock(color="white", size="20px", show_seconds=True)
     # Ajout d'un petit menu
     st.markdown("---")
-    choice = st.radio("Navigation", ["Login", "Register", "Admin", "User"])
-    # Mettre à jour la page si l'utilisateur change le radio
-    st.session_state.page = choice.lower()
-    st.session_state.page_radio = choice.lower()   
+    choice = st.radio("Navigation", ["Login", "Register", "Admin", "User"],
+    index=["login", "register", "admin", "user"].index(st.session_state.choice_radio)
+    )
+    
+    # Si l'utilisateur change le radio
+    if choice.lower() != st.session_state.choice_radio:
+        st.session_state.choice_radio = choice.lower()
+        st.session_state.page = choice.lower()
 
 st.sidebar.write("Navigation :", choice)
 
@@ -49,6 +53,7 @@ elif page == "user":
     user.show()
 else:
     st.error("Page inconnue.")
+
 
 
 
