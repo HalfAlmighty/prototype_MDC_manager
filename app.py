@@ -11,7 +11,6 @@ st.sidebar.markdown("---")
 st.sidebar.subheader("DEBUG")
 st.sidebar.write("Page actuelle :", st.session_state.get("page"))
 st.sidebar.write("Utilisateur :", st.session_state.get("user"))
-st.sidebar.write("Navigation :", choice)
 
 # --- Import des views ---
 from views import login, register, admin, user
@@ -34,6 +33,9 @@ with st.sidebar:
     st.session_state.page = choice.lower()
     st.session_state.page_radio = choice.lower()   
 
+st.sidebar.write("Navigation :", choice)
+
+
 # --- Routage ---
 page = st.session_state.page
 
@@ -47,6 +49,7 @@ elif page == "user":
     user.show()
 else:
     st.error("Page inconnue.")
+
 
 
 
