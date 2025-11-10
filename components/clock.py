@@ -9,7 +9,7 @@ def display_clock(color="white", size="22px", show_seconds=True, format_24h=True
     <div style="font-size:{size}; font-weight:bold; color:{color}; margin-bottom:1px;">
         🕒 <span id="clock">00:00:00</span>
     </div>
-    <div style="font-size:14px; font-weight:normal; color:{color}; margin-bottom:5px;">
+    <div style="font-size:22px; font-weight:bold; color:{color}; margin-bottom:5px;">
         📅 <span id="date">S-- --/--/----</span>
     </div>
     <script>
@@ -52,6 +52,7 @@ def display_clock(color="white", size="22px", show_seconds=True, format_24h=True
     </script>
     """
     components.html(clock_html, height=60)
+
 
 
 
