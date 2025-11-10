@@ -10,6 +10,8 @@ def show():
     st.title("🧪 Espace Admin - Webscraping")
     st.subheader(f"Connecté en tant que {st.session_state.get('user')}")
 
+    fournisseurs.show()
+    
     # Barre latérale (fixe) Choix du module de webscraping
     with st.sidebar:
         module_choice = st.radio(
@@ -19,8 +21,6 @@ def show():
         )   
 
     st.markdown("---")
-
-    fournisseurs.show()
     
     # Affichage du module choisi
     if module_choice == "CarloErba":
@@ -33,5 +33,6 @@ def show():
         st.session_state.user = None
         st.session_state.page = "login"
         st.rerun()
+
 
 
