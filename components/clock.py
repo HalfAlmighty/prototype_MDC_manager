@@ -51,7 +51,8 @@ def display_clock(color="white", size="22px", show_seconds=True, format_24h=True
         updateClock();
     </script>
     """
-    components.html(clock_html, height=50)
+    components.html(clock_html, height=70)
+
 
 
 
