@@ -4,15 +4,12 @@ from webscraping import carloerba, vwr
 from views import fournisseurs
 
 def show():
-    fournisseurs.show()
     st.title("👑 Espace Administrateur")
     st.write(f"Connecté en tant que : **{st.session_state.user}**")
     st.markdown("---")
     st.title("🧪 Espace Admin - Webscraping")
     st.subheader(f"Connecté en tant que {st.session_state.get('user')}")
 
-
-    
     # Barre latérale (fixe) Choix du module de webscraping
     with st.sidebar:
         module_choice = st.radio(
@@ -34,6 +31,7 @@ def show():
         st.session_state.user = None
         st.session_state.page = "login"
         st.rerun()
+
 
 
 
