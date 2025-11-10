@@ -1,27 +1,34 @@
-# pages/login.py
+# views/login.py
 import streamlit as st
 from auth_db import verify_user
-from views import admin, user, register
+
+# Liste des admins test
+ADMINS = ["j.riff", "g.saucy", "n.metz", "c.riemer", "m.ludwig"]
 
 def show():
     st.title("🔐 Connexion")
 
-    username = st.text_input("Nom d'utilisateur")
-    password = st.text_input("Mot de passe", type="password")
+    # --- Champs de connexion avec clés uniques ---
+    username = st.text_input("Nom d'utilisateur", key="login_username")
+    password = st.text_input("Mot de passe", type="password", key="login_password")
 
-    if st.button("Se connecter"):
-        user = verify_user(username, password)
-        if user:
+    # --- Bouton connexion ---
+    if st.button("Se connecter", key="login_button"):
+        if username:
+            # Vérification test (toujours accepte n'importe quel mot de passe)
+            is_admin = username.lower() in ADMINS
+            user = {"id": username, "is_admin": is_admin, "is_validated": True}
+
+            # Mise à jour de la session
             st.session_state.user = username
-            if user["is_admin"]:
-                st.session_state.page = "admin"
-                admin.show()
-            else:
-                st.session_state.page = "user"
-                user.show()
+            st.session_state.page = "admin" if is_admin else "user"
+            
+            # On laisse le routage de app.py gérer l'affichage
+            st.experimental_rerun()
         else:
-            st.error("❌ Nom d'utilisateur vide ou invalide.")
+            st.error("❌ Nom d'utilisateur vide.")
 
-    if st.button("Créer un compte"):
+    # --- Bouton création de compte ---
+    if st.button("Créer un compte", key="register_button"):
         st.session_state.page = "register"
-        register.show()
+        st.experimental_rerun()
