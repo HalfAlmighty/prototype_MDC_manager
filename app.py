@@ -3,7 +3,7 @@ import streamlit as st
 from auth_db import init_db
 from components.clock import display_clock
 # --- Import des views ---
-from views import login, register, admin, user, fournisseurs
+from views import login, register, admin, user, fournisseurs, test
 
 # --- Initialisation ---
 st.set_page_config(page_title="MDC Manager", layout="centered")
@@ -35,12 +35,14 @@ elif page == "register":
     register.show()
 elif page == "admin":
     admin.show()
-    fournisseurs.show()
 elif page == "user":
     user.show()
+elif page == "test":
+    test.show()
     fournisseurs.show()
 else:
     st.error("Page inconnue.")
+
 
 
 
