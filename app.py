@@ -8,7 +8,7 @@ st.set_page_config(page_title="MDC Manager", layout="centered")
 init_db()
 
 # --- Import des views ---
-from views_custom import login, register, admin, user
+from views import login, register, admin, user
 
 # --- Barre latérale (fixe) ---
 with st.sidebar:
@@ -38,3 +38,4 @@ elif page == "user":
     user.show()
 else:
     st.error("Page inconnue.")
+
