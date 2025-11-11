@@ -64,6 +64,11 @@ def show():
     if st.button("🧹 Effacer le chat"):
         st.session_state.chat_history = []
         st.rerun()
+
+    #Masquer le chat
+    #for chat in st.session_state.get("chat_history", []):
+    #    if st.button("Cacher le chat"):
+    #    st.session_state.show_chat = False
     
     st.markdown("---")
     
