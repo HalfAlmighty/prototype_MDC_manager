@@ -61,6 +61,12 @@ def show():
 
     st.markdown("---")
     
+    if st.button("🧹 Effacer le chat"):
+        st.session_state.chat_history = []
+        st.rerun()
+    
+    st.markdown("---")
+    
     st.divider()
     if st.button("Se déconnecter"):
         st.session_state.user = None
