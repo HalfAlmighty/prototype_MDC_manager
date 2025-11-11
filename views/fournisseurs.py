@@ -32,6 +32,14 @@ def show():
             elif famille == "CONSOMMABLE POUR L'HYGIENE ET LA SECURITE - EPI":
                 para_medical_hygiene.show(fournisseur_selected, lots)
 
+    st.markdown("---")
+    
+    st.divider()
+    if st.button("Se déconnecter"):
+        st.session_state.user = None
+        st.session_state.page = "login"
+        st.rerun()
+
 
 
 
