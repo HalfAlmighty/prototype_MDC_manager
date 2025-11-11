@@ -60,6 +60,17 @@ def show():
             st.markdown(f"**Kimi K2** : {chat['content']}")
 
     st.markdown("---")
+
+    if st.session_state.chat_history:
+    st.download_button(
+        label="📥 Télécharger l'historique",
+        data=json.dumps(st.session_state.chat_history, ensure_ascii=False, indent=2),
+        file_name="chat_history.json",
+        mime="application/json"
+    )
+
+    st.markdown("---")
+
     
     if st.button("🧹 Effacer le chat"):
         st.session_state.chat_history = []
