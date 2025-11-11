@@ -39,12 +39,13 @@ elif page == "user":
     user.show()
 elif page == "test":
     #test.show()
-    #fournisseurs.show()
+    fournisseurs.show()
     tab_cmd.show_table()
 elif page == "chatbot":
     streamlit_chatbot.show()
 else:
     st.error("Page inconnue.")
+
 
 
 
