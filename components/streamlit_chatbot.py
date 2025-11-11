@@ -56,3 +56,11 @@ def show():
             st.markdown(f"**Vous** : {chat['content']}")
         else:
             st.markdown(f"**Kimi K2** : {chat['content']}")
+
+    st.markdown("---")
+    
+    st.divider()
+    if st.button("Se déconnecter"):
+        st.session_state.user = None
+        st.session_state.page = "login"
+        st.rerun()
