@@ -138,3 +138,12 @@ def show_table():
 
     # Sauvegarde du tableau filtré en session
     st.session_state.df_commandes_filtrees = df_filtre
+
+    st.markdown("---")
+
+    st.divider()
+    if st.button("Se déconnecter"):
+        st.session_state.user = None
+        st.session_state.page = "login"
+        st.rerun()
+
