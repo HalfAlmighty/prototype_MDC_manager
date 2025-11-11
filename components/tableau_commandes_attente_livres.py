@@ -31,23 +31,24 @@ def show_table():
         st.info("Veuillez importer un fichier Excel pour continuer.")
         return
 
-    # --- Étape 2 : Lecture sécurisée du fichier Excel ---
+  # --- Étape 2 : Lecture sécurisée du fichier Excel ---
     try:
-        df = pd.read_excel(excel_file, engine="openpyxl")
-    except ImportError:
-        st.error("⚠️ Le module 'openpyxl' n'est pas installé.")
+        # Lecture automatique selon l'extension
+        if excel_file.name.endswith(".xlsx"):
+            df = pd.read_excel(excel_file, engine="openpyxl")
+        elif excel_file.name.endswith(".xls"):
+            df = pd.read_excel(excel_file, engine="xlrd")
+        else:
+            st.error("Format non reconnu : veuillez importer un fichier .xlsx ou .xls.")
+            return
+
+    except ImportError as e:
+        st.error(f"⚠️ Dépendance manquante : {e}")
+        st.info("Installez-la dans requirements.txt : `openpyxl` et `xlrd>=2.0.1`.")
         return
     except Exception as e:
         st.error(f"Erreur lors du chargement du fichier : {e}")
         return
-
-    # Vérification basique du contenu
-    if df.empty:
-        st.warning("Le fichier ne contient aucune donnée.")
-        return
-
-    # Normalisation des noms de colonnes
-    df.columns = df.columns.str.strip()
 
     # -------------------------------------------------------------------------
     # Étape 3 : Interface de filtrage
