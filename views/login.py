@@ -31,6 +31,11 @@ def show():
             st.session_state.page = "test"
             st.success(f"🧪 Connexion test réussie ! Bienvenue {username}")
             st.rerun()
+     
+        elif username.lower() == "chatbot":
+            st.session_state.page = "chatbot"
+            st.success(f"🧪 Connexion test réussie ! Bienvenue {username}")
+            st.rerun()
 
         else:
             st.session_state.page = "user"
@@ -41,3 +46,4 @@ def show():
     if st.button("Créer un compte", key="login_register_btn"):
         st.session_state.page = "register"
         st.rerun()
+
