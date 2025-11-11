@@ -22,9 +22,11 @@ def show():
     st.title("🤖 Chatbot Kimi K2")
 
     # --- Zone de saisie utilisateur ---
-    user_input = st.text_input("Votre message :", "")
+    with st.form("chat_form"):
+        user_input = st.text_input("Votre message :", "")
+        submitted = st.form_submit_button("Envoyer")    
 
-    if st.button("Envoyer") and user_input.strip() != "":
+    if submitted and user_input.strip() != "":
         # Ajouter le message de l'utilisateur à l'historique
         st.session_state.chat_history.append({"role": "user", "content": user_input})
 
