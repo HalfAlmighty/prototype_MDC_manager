@@ -5,22 +5,23 @@
 # Ce module Streamlit permet d'importer, filtrer et afficher
 # un tableau Excel de commandes. Il inclut :
 #  - Upload de fichier Excel (compatible Streamlit Cloud)
-#  - Filtres multi-colonnes interactifs
-#  - Téléchargement du tableau filtré (Excel ou CSV)
-#  - Conservation du tableau en session (stable après téléchargement)
+#  - Filtres hiérarchiques dynamiques (filtre principal)
+#  - Téléchargement du tableau filtré (Excel)
+#  - Conservation du tableau en session
 # ===============================================================
 
 import streamlit as st
 import pandas as pd
 from io import BytesIO
 
+
 # -------------------------------------------------------------------------
-# 🧩 Fonction principale d'affichage du tableau des commandes
+# 🧩 Fonction principale
 # -------------------------------------------------------------------------
 def show_table():
     st.title("📦 Consultation des commandes en attente ou livrées")
 
-    # --- Étape 1 : Importation du fichier Excel ---
+    # === Étape 1 : Importation du fichier Excel ===
     st.subheader("1️⃣ Importer un fichier Excel")
     excel_file = st.file_uploader(
         "Importer un fichier Excel (.xlsx ou .xls)",
@@ -31,9 +32,8 @@ def show_table():
         st.info("Veuillez importer un fichier Excel pour continuer.")
         return
 
-  # --- Étape 2 : Lecture sécurisée du fichier Excel ---
+    # === Étape 2 : Lecture sécurisée du fichier Excel ===
     try:
-        # Lecture automatique selon l'extension
         if excel_file.name.endswith(".xlsx"):
             df = pd.read_excel(excel_file, engine="openpyxl")
         elif excel_file.name.endswith(".xls"):
@@ -41,85 +41,87 @@ def show_table():
         else:
             st.error("Format non reconnu : veuillez importer un fichier .xlsx ou .xls.")
             return
-
-    except ImportError as e:
-        st.error(f"⚠️ Dépendance manquante : {e}")
-        st.info("Installez-la dans requirements.txt : `openpyxl` et `xlrd>=2.0.1`.")
-        return
     except Exception as e:
         st.error(f"Erreur lors du chargement du fichier : {e}")
         return
 
-    # -------------------------------------------------------------------------
-    # Étape 3 : Interface de filtrage
-    # -------------------------------------------------------------------------
-    st.subheader("2️⃣ Filtres interactifs")
+    # --- Vérifie la présence minimale des colonnes nécessaires ---
+    colonnes_attendues = [
+        "Code article", "Référence", "Désignation", "Famille", "Date de la commande",
+        "N° de commande", "N°Fournisseur", "Fournisseur", "Quantité", "PUHT", "Montant",
+        "N° de confirmation", "Commentaire ligne", "Code acheteur", "Preneur"
+    ]
 
-    colonnes_filtrables = {
-        "Code article": "A",
-        "Référence": "B",
-        "Désignation": "C",
-        "Famille": "D",
-        "N°Fournisseur": "G",
-        "Fournisseur": "H",
-        "Code acheteur": "N",
-        "Preneur": "O",
-    }
+    if not all(col in df.columns for col in colonnes_attendues):
+        st.error("⚠️ Le fichier ne contient pas toutes les colonnes attendues. Vérifiez le format.")
+        st.write("Colonnes attendues :", colonnes_attendues)
+        st.write("Colonnes trouvées :", df.columns.tolist())
+        return
 
-    # Sélection du filtre principal (détermine la hiérarchie)
+    # === Étape 3 : Interface de filtrage hiérarchique ===
+    st.subheader("2️⃣ Filtres interactifs avec hiérarchie")
+
+    colonnes_filtrables = [
+        "Code article", "Référence", "Désignation", "Famille",
+        "N°Fournisseur", "Fournisseur", "Code acheteur", "Preneur"
+    ]
+
+    # --- Sélection du filtre principal ---
     filtre_principal = st.radio(
         "🧭 Choisissez le filtre principal :",
-        list(colonnes_filtrables.keys()),
+        colonnes_filtrables,
         horizontal=True,
     )
 
-    # Fonction de tri alphanumérique croissant
+    # --- Fonction utilitaire de tri alpha ---
     def tri_alpha(values):
         return sorted(values.astype(str).unique(), key=lambda x: x.lower())
 
-    # Boîtes déroulantes avec autocomplétion (multi-sélection)
+    # --- Sélection des valeurs du filtre principal ---
+    valeurs_principales = tri_alpha(df[filtre_principal].dropna())
+    selection_principale = st.multiselect(
+        f"{filtre_principal} (filtre principal) :",
+        options=valeurs_principales,
+        placeholder=f"Sélectionnez un ou plusieurs {filtre_principal.lower()}...",
+    )
+
+    # --- Filtrage du DataFrame selon le filtre principal ---
+    if selection_principale:
+        df_filtre_base = df[df[filtre_principal].isin(selection_principale)]
+    else:
+        df_filtre_base = df.copy()
+
+    # --- Création des autres filtres dépendants ---
+    st.markdown("### 🔍 Filtres secondaires (affinage)")
     selections = {}
-    for nom_col in colonnes_filtrables.keys():
-        col_values = df[nom_col].dropna()
-        col_values_sorted = tri_alpha(col_values)
 
-        # Si ce n’est pas le filtre principal, on adapte selon les sélections précédentes
-        if nom_col != filtre_principal:
-            # On ne filtre que si une sélection principale existe
-            principal_sel = selections.get(filtre_principal)
-            if principal_sel:
-                df_filtre = df[df[filtre_principal].isin(principal_sel)]
-                col_values_sorted = tri_alpha(df_filtre[nom_col].dropna())
+    for col in colonnes_filtrables:
+        if col == filtre_principal:
+            continue  # On ignore le filtre principal ici
 
-        selections[nom_col] = st.multiselect(
-            f"{nom_col} :", 
-            options=col_values_sorted,
-            default=[],
-            placeholder=f"Sélectionner un ou plusieurs {nom_col.lower()}..."
+        # Liste des valeurs disponibles après filtrage principal
+        valeurs_possibles = tri_alpha(df_filtre_base[col].dropna())
+        selections[col] = st.multiselect(
+            f"{col} :", 
+            options=valeurs_possibles,
+            placeholder=f"Sélectionnez un ou plusieurs {col.lower()}..."
         )
 
-    # -------------------------------------------------------------------------
-    # Étape 4 : Application des filtres cumulés
-    # -------------------------------------------------------------------------
-    df_filtre = df.copy()
+    # --- Application des filtres cumulés ---
+    df_filtre = df_filtre_base.copy()
     for col, valeurs in selections.items():
         if valeurs:
             df_filtre = df_filtre[df_filtre[col].isin(valeurs)]
 
-    # -------------------------------------------------------------------------
-    # Étape 5 : Affichage du tableau filtré
-    # -------------------------------------------------------------------------
+    # === Étape 4 : Affichage du tableau ===
     st.subheader("3️⃣ Résultats filtrés")
-
     if df_filtre.empty:
         st.warning("Aucun résultat trouvé pour les critères choisis.")
     else:
         st.dataframe(df_filtre, use_container_width=True)
         st.success(f"✅ {len(df_filtre)} lignes affichées.")
 
-    # -------------------------------------------------------------------------
-    # Étape 6 : Téléchargement du résultat
-    # -------------------------------------------------------------------------
+    # === Étape 5 : Téléchargement du tableau filtré ===
     st.subheader("4️⃣ Télécharger le tableau filtré")
 
     output = BytesIO()
@@ -134,5 +136,5 @@ def show_table():
         key="download_excel"
     )
 
-    # Sauvegarde en session (persistance)
+    # Sauvegarde du tableau filtré en session
     st.session_state.df_commandes_filtrees = df_filtre
