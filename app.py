@@ -1,7 +1,7 @@
 # app.py
 import streamlit as st
 from components.clock import display_clock
-from components import tableau_commandes_attente_livres
+from components import tableau_commandes_attente_livres as tab_cmd
 # --- Import des views ---
 from views import login, register, admin, user, fournisseurs, test
 
@@ -42,6 +42,7 @@ elif page == "test":
     tab_cmd.show_table()
 else:
     st.error("Page inconnue.")
+
 
 
 
