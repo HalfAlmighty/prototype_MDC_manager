@@ -1,0 +1,35 @@
+# --- Python ---
+__pycache__
+.pyc
+.pyo
+.pyd
+.pkl
+
+# --- Environnements virtuels ---
+#.venv
+#env
+#venv
+
+# --- Streamlit cache ---
+.streamlit
+.cache
+logs
+
+# --- Données locales ---
+#donnees_commandes_attente_livres
+#data
+#uploads
+#.csv
+#.xlsx
+
+# --- Configuration locale ---
+#config.json
+#.env
+
+# --- VS Code  IDE ---
+#.vscode
+#.idea
+
+# --- Fichiers système ---
+.DS_Store
+Thumbs.db
