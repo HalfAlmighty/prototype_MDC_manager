@@ -62,7 +62,7 @@ def show():
     st.markdown("---")
 
     if st.session_state.chat_history:
-    st.download_button(
+        st.download_button(
         label="📥 Télécharger l'historique",
         data=json.dumps(st.session_state.chat_history, ensure_ascii=False, indent=2),
         file_name="chat_history.json",
