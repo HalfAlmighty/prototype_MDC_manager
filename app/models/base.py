@@ -1,4 +1,4 @@
-# app/db/base.py
+# app/models/base.py
 # ------------------------------------------------
 # Définition du Base SQLAlchemy pour centraliser metadata
 # ------------------------------------------------

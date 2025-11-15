@@ -22,6 +22,8 @@ logs
 #.csv
 #.xlsx
 
+restore_render_db.ps1
+choice_db_local_or_render.ps1
 # --- Configuration locale ---
 #config.json
 #.env
