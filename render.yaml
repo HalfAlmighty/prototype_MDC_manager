@@ -6,10 +6,10 @@ services:
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: DATABASE_URL
-        value: "postgres://user:password@host:port/dbname"
+        value: "postgresql://mdc_manager_db_user:klfVUcMrX4KNMNT8F0uVDZXbrr04ZJeT@dpg-d4bsgk6r433s73d4tu80-a/mdc_manager_db"
       - key: SECRET_KEY
         value: "ma_super_cle_secrete"
       - key: REDIS_URL
-        value: "redis://..."
+        value: "redis://red-d4bsjcq4d50c73cprg10:6379"
       - key: CORS_ORIGINS
         value: "https://mdc-manager.vercel.app"
