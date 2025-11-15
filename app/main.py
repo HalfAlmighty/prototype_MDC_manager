@@ -1,21 +1,40 @@
 # ---------------------------------------------------------------
 # app/main.py
 # ---------------------------------------------------------------
-# C’est le "point d’entrée" de ton API FastAPI.
-# On importe l'application FastAPI
-# et on attache toutes les routes.
+# Point d’entrée de l'API FastAPI.
+# - Création de l'application
+# - Définition de la route racine
+# - Inclusion des routes du module app.api.routes
 # ---------------------------------------------------------------
 
 from fastapi import FastAPI
 from app.api.routes import router
 
-# On crée l'application FastAPI
+# Création de l'application FastAPI
 app = FastAPI(
     title="MDC Manager API",
     description="Backend prototype du MDC Manager",
     version="0.1.0"
 )
 
-# On "monte" les routes dans l'application
-# => Toutes les routes définies dans routes.py deviennent accessibles.
+# ---------------------------------------------------------------
+# ROUTE RACINE "/"
+# ---------------------------------------------------------------
+# Permet de tester rapidement si l’API répond.
+# Appelée via :
+#   GET https://mdc-manager-backend.onrender.com/
+# ---------------------------------------------------------------
+@app.get("/")
+def root():
+    return {
+        "status": "ok",
+        "message": "Backend MDC Manager is running"
+    }
+
+# ---------------------------------------------------------------
+# INCLUSION DES ROUTES
+# ---------------------------------------------------------------
+# On "monte" les routes définies dans routes.py
+# Cela rend toutes les routes disponibles dans l'application.
+# ---------------------------------------------------------------
 app.include_router(router)
